@@ -19,7 +19,6 @@ import com.example.list.content.Content.ListItem;
 
 public class ListFragment extends Fragment {
 
-    private static final String SAVED_SIZE = "size";
     private static final int PORTRAIT_COL_NUMBER = 3;
     private static final int LANDSCAPE_COL_NUMBER = 4;
 
@@ -27,17 +26,6 @@ public class ListFragment extends Fragment {
 
     private MyItemRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            size = savedInstanceState.getInt(SAVED_SIZE);
-            for (int i = Content.getSize(); i < size; i++) {
-                Content.addItem(Content.createListItem(i));
-            }
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,12 +57,6 @@ public class ListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SAVED_SIZE, size);
     }
 
     public void addItem() {
