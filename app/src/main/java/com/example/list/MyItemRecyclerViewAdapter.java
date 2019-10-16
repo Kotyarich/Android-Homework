@@ -10,18 +10,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.list.ListFragment.OnListFragmentInteractionListener;
-import com.example.list.content.Content.ListItem;
+import com.example.list.ListFragment.ListItem;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
 
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<ListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<ListItem> items, OnListFragmentInteractionListener listener) {
+    MyItemRecyclerViewAdapter(List<ListItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,16 +37,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mContentView.setText(holder.mItem.content);
+        final ListItem item = mValues.get(position);
+        holder.mContentView.setText(item.content);
         Context context = holder.mContentView.getContext();
-        holder.mContentView.setTextColor(ContextCompat.getColor(context, holder.mItem.mColor));
+        holder.mContentView.setTextColor(ContextCompat.getColor(context, item.mColor));
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(item);
                 }
             }
         });
@@ -56,14 +57,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return mValues.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mContentView;
-        public ListItem mItem;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        final TextView mContentView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            mView = view;
             mContentView = view.findViewById(R.id.content);
         }
     }

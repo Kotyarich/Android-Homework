@@ -1,15 +1,13 @@
 package com.example.list;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 
 public class SingleItemFragment extends Fragment {
@@ -20,7 +18,7 @@ public class SingleItemFragment extends Fragment {
     public SingleItemFragment() {
     }
 
-    public static SingleItemFragment newInstance(String text) {
+    static SingleItemFragment newInstance(String text) {
         SingleItemFragment fragment = new SingleItemFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TEXT, text);
@@ -39,18 +37,11 @@ public class SingleItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_blank, container, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        TextView view = getView().findViewById(R.id.frgmText);
-        if (view != null) {
-            view.setText(text);
-            Context context = getContext();
-            int color = Integer.parseInt(text) % 2 == 0? R.color.colorEven : R.color.colorOdd;
-            view.setTextColor(ContextCompat.getColor(context, color));
-        }
+        View v = inflater.inflate(R.layout.fragment_blank, container, false);
+        TextView textView = v.findViewById(R.id.frgmText);
+        textView.setText(text);
+        int color = Integer.parseInt(text) % 2 == 0 ? R.color.colorEven : R.color.colorOdd;
+        textView.setTextColor(ContextCompat.getColor(inflater.getContext(), color));
+        return v;
     }
 }

@@ -5,10 +5,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.example.list.content.Content;
 
 
 public class MainActivity extends AppCompatActivity
@@ -19,7 +15,6 @@ public class MainActivity extends AppCompatActivity
     private static final String SINGLE_NUM_STATE = "single";
 
     private String curr_state = LIST_STATE;
-    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +22,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState != null) {
-            curr_state = savedInstanceState.getString(SAVED_STATE);
+            String savedState = savedInstanceState.getString(SAVED_STATE);
+            if (savedState != null) {
+                curr_state = savedState;
+            }
         }
 
         if (curr_state.equals(LIST_STATE)) {
-            FragmentManager manager = getSupportFragmentManager();
-            fragmentTransaction = manager.beginTransaction();
-            fragmentTransaction.replace(R.id.frgmCont, new ListFragment());
-            fragmentTransaction.commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, new ListFragment()).commit();
         }
     }
 
@@ -51,18 +46,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Content.ListItem item) {
-        FragmentManager manager = getSupportFragmentManager();
-        fragmentTransaction = manager.beginTransaction();
+    public void onListFragmentInteraction(ListFragment.ListItem item) {
         SingleItemFragment fragment = SingleItemFragment.newInstance(item.content);
-        fragmentTransaction.replace(R.id.frgmCont, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, fragment).addToBackStack(null).commit();
         curr_state = SINGLE_NUM_STATE;
     }
 
     public void onAddButtonClick(View view) {
         ListFragment fragment = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.frgmCont);
-        fragment.addItem();
+        if (fragment != null) {
+            fragment.addItem();
+        }
     }
 }
