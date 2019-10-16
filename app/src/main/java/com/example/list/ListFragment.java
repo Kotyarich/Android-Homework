@@ -22,8 +22,6 @@ public class ListFragment extends Fragment {
     private static final int PORTRAIT_COL_NUMBER = 3;
     private static final int LANDSCAPE_COL_NUMBER = 4;
 
-    private int size = Content.START_COUNT;
-
     private MyItemRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
@@ -60,8 +58,9 @@ public class ListFragment extends Fragment {
     }
 
     public void addItem() {
-        Content.addItem(Content.createListItem(++size));
-        adapter.notifyItemChanged(size - 1);
+        int size = adapter.getItemCount();
+        Content.addItem(Content.createListItem(size + 1));
+        adapter.notifyItemChanged(size);
     }
 
     public interface OnListFragmentInteractionListener {

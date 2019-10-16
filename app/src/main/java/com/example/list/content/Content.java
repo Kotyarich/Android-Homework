@@ -25,10 +25,6 @@ public class Content {
         return new ListItem(Integer.toString(position), color);
     }
 
-    public static int getSize() {
-        return ITEMS.size();
-    }
-
     public static class ListItem {
         public final String content;
         public final int mColor;
