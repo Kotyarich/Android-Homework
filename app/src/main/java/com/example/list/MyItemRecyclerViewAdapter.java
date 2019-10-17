@@ -1,5 +1,6 @@
 package com.example.list;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<ListItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener;
 
     MyItemRecyclerViewAdapter(List<ListItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -50,6 +51,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 }
             }
         });
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mListener = null;
     }
 
     @Override

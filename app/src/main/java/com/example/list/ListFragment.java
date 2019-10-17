@@ -75,7 +75,7 @@ public class ListFragment extends Fragment {
     void addItem() {
         int size = adapter.getItemCount();
         items.add(createListItem(size + 1));
-        adapter.notifyItemChanged(size);
+        adapter.notifyItemInserted(size);
     }
 
     private ListItem createListItem(int number) {

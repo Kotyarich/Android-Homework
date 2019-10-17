@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ListFragment.ListItem item) {
-        SingleItemFragment fragment = SingleItemFragment.newInstance(item.content);
+        SingleItemFragment fragment = SingleItemFragment.newInstance(item.content, item.mColor);
         getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, fragment).addToBackStack(null).commit();
         curr_state = SINGLE_NUM_STATE;
     }

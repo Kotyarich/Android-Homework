@@ -12,16 +12,19 @@ import androidx.fragment.app.Fragment;
 
 public class SingleItemFragment extends Fragment {
     private static final String ARG_TEXT = "text_value";
+    private static final String ARG_COLOR = "color_value";
 
     private String text;
+    private int color;
 
     public SingleItemFragment() {
     }
 
-    static SingleItemFragment newInstance(String text) {
+    static SingleItemFragment newInstance(String text, int color) {
         SingleItemFragment fragment = new SingleItemFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TEXT, text);
+        args.putInt(ARG_COLOR, color);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,6 +34,7 @@ public class SingleItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             text = getArguments().getString(ARG_TEXT);
+            color = getArguments().getInt(ARG_COLOR);
         }
     }
 
@@ -40,7 +44,6 @@ public class SingleItemFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_blank, container, false);
         TextView textView = v.findViewById(R.id.frgmText);
         textView.setText(text);
-        int color = Integer.parseInt(text) % 2 == 0 ? R.color.colorEven : R.color.colorOdd;
         textView.setTextColor(ContextCompat.getColor(inflater.getContext(), color));
         return v;
     }
